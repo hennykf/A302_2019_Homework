@@ -111,12 +111,16 @@ def user_interface(list_of_files, time_col, mag_col, output_filepath):
     if there are other highly likely periods.
     '''
     print(instructions)
-
+    #initiates an output file
     output_file = pd.DataFrame()
+
+    # Loops through all datasets in the list_of_files, generates the graphs, and
+    requires the user to decide if the fit is good or not.
 
     for file in list_of_files:
         fit_info = variable_star_eval(file, time_col, mag_col)
 
+        # interactive part where user evaluates whether it's a good fit
         while True:
             try:
                 fit_qual = int(input("Is this curve a good fit? 1 = good fit, 0 = not good fit. "), 2)
@@ -124,14 +128,16 @@ def user_interface(list_of_files, time_col, mag_col, output_filepath):
             except ValueError:
                 print("Error: Must enter either 1 or 0.")
 
+        # Creates column with user's input, 1 is good fit, 0 is bad fit.
         if fit_qual == 1:
             fit_info['good_fit'] = 1
         elif fit_qual == 0:
             fit_info['good_fit'] = 0
 
+        # Creates column with name of file data is from
         fit_info['original_datafile_name'] = file
-
+        #Appends the fit info onto the output_file, so you end up with a DataFrame of all the fit data.
         output_file = output_file.append(fit_info)
 
-    print("Great job! You're done evaluating fits! Fit data can be found at the filepath you privided; " + output_filepath)
+    print("Great job! You're done evaluating fits! Fit data can be found at the filepath you provided; " + output_filepath)
     save_out = output_file.to_csv(output_filepath)

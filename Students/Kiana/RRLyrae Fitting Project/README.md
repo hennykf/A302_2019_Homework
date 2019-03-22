@@ -60,7 +60,7 @@ This function creates 3 plots:
 fit_info = variable_star_eval('ZTF18abosdvm.csv', 'jd', 'mag')
 ```
 
-### ### Using user_interface
+### Using user_interface
 
 ```
 user_interface(list_of_files, time_col, mag_col, output_filepath)
@@ -89,10 +89,6 @@ user_interface(('ZTF17aacnrhp.csv', 'ZTF18aavskho.csv', 'ZTF18abosdvm.csv'),
 ## Author
 
 * [**Kiana Henny**](https://github.com/hennykf)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
