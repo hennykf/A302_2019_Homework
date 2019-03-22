@@ -26,25 +26,64 @@ user_interface(list_of_files, time_col, mag_col, output_filepath)
 ```
 
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+### Using variable_star_eval
 ```
-Give an example
+variable_star_eval(dataset, time_col, mag_col)
 ```
 
-### And coding style tests
+`dataset`: the .csv file with the time and magnitude data in it.  You could probably also use
+flux instead of magnitude.
 
-Explain what these tests test and why
+`time_col`: column with time data
+
+`mag_col`: column with magnitude data
+
+Returns: `fit_info`: Contains t, phase, and magnitude fit data, and the period used to
+generate that fit.
+
+This function creates 3 plots:
+      1. The raw dataset in time vs magnitude. This can sometimes be helpful just to see where
+      you're starting from and help give you a little intuition with the data.
+      2. The Lomb Scargle Periodogram, which is used to determine the most likely period of the star.
+      It finds the highest-power period, and uses that period to perform the light curve fit for the
+      third graph.  If the light curve doesn't seem to fit very well, look to see if there are other
+      high-power possible periods using this graph.
+      3. One period of the light curve fit, which was generated using the RRLyraeTemplateModeler
+         function from the gatspy library.  This fit is overlaid with the original data, which
+         has been transformed to be displayed in one period.
+  The function output includes the time, magnitude and phase information to recreate the fit shown
+  in graph 3.
+
+
+*Example:*
+```
+fit_info = variable_star_eval('ZTF18abosdvm.csv', 'jd', 'mag')
+```
+
+### ### Using user_interface
 
 ```
-Give an example
+user_interface(list_of_files, time_col, mag_col, output_filepath)
 ```
 
-## Deployment
+`list_of_files`: A list, (), of all the datasets you want to evaluate for goodness of fit.
 
-Add additional notes about how to deploy this on a live system
+`time_col`: column with time data
+
+`mag_col`: column with magnitude data
+
+`output_filepath`: name of output file with fit data.  `user_interface` creates a .csv file,
+so you should use that extension.
+
+`user_interface` uses the variable_star_eval function to plot 3 graphs of the data, and asks the user to determine whether the fit is good.  If the fit is good, the user should enter "1", and if the fit is bad, they should enter "0". No other inputs are allowed. The function then creates a file with the time, magnitude, and phase light curve data, as well as a column with the binary indicator of goodness of fit, and a column listing the original source of the data. This is so it is easy to subset the data to
+all good fits, all poor fits, a specific dataset, etc.
+
+
+```
+user_interface(('ZTF17aacnrhp.csv', 'ZTF18aavskho.csv', 'ZTF18abosdvm.csv'),
+               'jd', 'mag', 'example_file.csv')
+```
+
 
 
 ## Author
