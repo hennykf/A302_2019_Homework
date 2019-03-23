@@ -76,7 +76,7 @@ user_interface(list_of_files, time_col, mag_col, output_filepath)
 create a .csv file, so do not include a file extension.
 
 `user_interface` uses the variable_star_eval function to plot 3 graphs of the data, and asks the user to determine whether the fit is good.  If the fit is good, the user should enter "1", and if the fit is bad, they should enter "0". No other inputs are allowed. The function then creates two files, with the time, magnitude, and phase light curve data, and a column listing the original source of the data. All fits that
-are given a 1 value are compiled into a file whose name is by `output_filepath`, and whether it is the good or bad fit file. For example, in the example below, the two files created will be `example_file_goodfits.csv` and `example_file_badfits.csv`
+are given a 1 value are compiled into a file whose name is by `output_filepath`, and whether it is the good or bad fit file. For example, in the example below, the two files created will be `example_file_goodfits.csv` and `example_file_badfits.csv`, in the current working directory.
 
 
 ```
